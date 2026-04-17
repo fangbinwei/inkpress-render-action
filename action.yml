@@ -1,0 +1,32 @@
+name: 'Inkpress Renderer'
+description: 'Render Obsidian markdown vault folders into a static HTML site'
+inputs:
+  vault-path:
+    description: 'Path to Obsidian vault root'
+    required: true
+    default: '.'
+  publish-dirs:
+    description: 'Comma-separated directories to publish (relative to vault root)'
+    required: true
+  output-dir:
+    description: 'Output directory for rendered HTML'
+    required: true
+    default: '.site-output'
+  upload-mode:
+    description: '"html" or "html+md"'
+    required: false
+    default: 'html'
+  dead-link-policy:
+    description: '"silent" or "marked"'
+    required: false
+    default: 'silent'
+outputs:
+  rendered-count:
+    description: 'Number of files rendered'
+  dead-link-count:
+    description: 'Number of dead links found'
+  report-path:
+    description: 'Path to the JSON publish report file'
+runs:
+  using: 'node20'
+  main: 'dist/index.js'
