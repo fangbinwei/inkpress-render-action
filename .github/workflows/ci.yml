@@ -17,4 +17,12 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm exec tsc --noEmit
       - run: pnpm run build
+      - name: Verify dist/ is up to date
+        run: |
+          if ! git diff --quiet --exit-code -- dist/; then
+            echo "::error::dist/ is out of sync with src/. Run 'pnpm run build' and commit the result."
+            git diff -- dist/
+            exit 1
+          fi
