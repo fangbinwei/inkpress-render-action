@@ -2,7 +2,7 @@ import * as core from '@actions/core'
 import { renderSite, DefaultTheme } from 'inkpress-renderer'
 import { createNodeAdapter } from './node-adapter'
 import { writeFileSync, mkdirSync } from 'fs'
-import { join, dirname } from 'path'
+import { join, dirname, resolve } from 'path'
 
 async function run(): Promise<void> {
   try {
@@ -12,8 +12,22 @@ async function run(): Promise<void> {
       .map(s => s.trim())
       .filter(Boolean)
     const outputDir = core.getInput('output-dir', { required: true })
-    const uploadMode = (core.getInput('upload-mode') || 'html') as 'html' | 'html+md'
-    const deadLinkPolicy = (core.getInput('dead-link-policy') || 'silent') as 'silent' | 'marked'
+    const uploadMode = core.getInput('upload-mode') || 'html'
+    const deadLinkPolicy = core.getInput('dead-link-policy') || 'silent'
+
+    // Validate inputs
+    if (publishDirs.length === 0) {
+      core.setFailed('publish-dirs must contain at least one directory')
+      return
+    }
+    if (uploadMode !== 'html' && uploadMode !== 'html+md') {
+      core.setFailed(`Invalid upload-mode "${uploadMode}". Must be "html" or "html+md"`)
+      return
+    }
+    if (deadLinkPolicy !== 'silent' && deadLinkPolicy !== 'marked') {
+      core.setFailed(`Invalid dead-link-policy "${deadLinkPolicy}". Must be "silent" or "marked"`)
+      return
+    }
 
     core.info(`Rendering vault at ${vaultPath}, dirs: ${publishDirs.join(', ')}`)
 
@@ -29,8 +43,13 @@ async function run(): Promise<void> {
       },
     })
 
+    const resolvedOutputDir = resolve(outputDir)
     for (const file of result.files) {
-      const dest = join(outputDir, file.relativePath)
+      const dest = resolve(join(outputDir, file.relativePath))
+      if (!dest.startsWith(resolvedOutputDir + '/') && dest !== resolvedOutputDir) {
+        core.warning(`Skipping file with path escaping output directory: ${file.relativePath}`)
+        continue
+      }
       mkdirSync(dirname(dest), { recursive: true })
       writeFileSync(dest, file.content)
     }

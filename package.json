@@ -2,8 +2,13 @@
   "name": "inkpress-render-action",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fangbinwei/inkpress-render-action.git"
+  },
+  "author": "fangbinwei",
   "scripts": {
-    "build": "ncc build src/index.ts -o dist"
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --outfile=dist/index.js"
   },
   "dependencies": {
     "inkpress-renderer": "^0.1.0",
@@ -12,6 +17,6 @@
   "devDependencies": {
     "typescript": "^5.4.0",
     "@types/node": "^20.0.0",
-    "@vercel/ncc": "^0.38.0"
+    "esbuild": "^0.20.0"
   }
 }
