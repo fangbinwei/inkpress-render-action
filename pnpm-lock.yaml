@@ -12,8 +12,8 @@ importers:
         specifier: ^1.10.0
         version: 1.11.1
       inkpress-renderer:
-        specifier: ^0.2.0
-        version: 0.2.0
+        specifier: ^0.2.1
+        version: 0.2.1
     devDependencies:
       '@biomejs/biome':
         specifier: 2.4.12
@@ -351,8 +351,8 @@ packages:
   html-void-elements@3.0.0:
     resolution: {integrity: sha512-bEqo66MRXsUGxWHV5IP0PUiAWwoEjba4VCzg0LjFJBpchPaTfyfCKTG6bc5F8ucKec3q5y6qOdGyYTSBEvhCrg==}
 
-  inkpress-renderer@0.2.0:
-    resolution: {integrity: sha512-8wzWninLTye3QpCBQafmR7E9pck+A4UeUcBsLRJg04wdVo2xZfDzB8GXFXTw3/uT+Fdxpwh0It0AGfDPAbGU8g==}
+  inkpress-renderer@0.2.1:
+    resolution: {integrity: sha512-yyxFouOCRD2ZqGSrBUkQx6vVe6FcqJrbE0LMuATs9oOuxAVg254h88NAqyk4vCFHqsV08Hgu3Rx0HA/FpxElbQ==}
     engines: {node: '>=20.0.0'}
 
   is-plain-obj@4.1.0:
@@ -855,7 +855,7 @@ snapshots:
 
   html-void-elements@3.0.0: {}
 
-  inkpress-renderer@0.2.0:
+  inkpress-renderer@0.2.1:
     dependencies:
       rehype-stringify: 10.0.1
       remark-frontmatter: 5.0.0
