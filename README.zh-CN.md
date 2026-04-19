@@ -1,10 +1,10 @@
-English | [简体中文](./README.zh-CN.md)
+[English](./README.md) | 简体中文
 
 # Inkpress Renderer Action
 
-Render Obsidian markdown vault folders into a static HTML site.
+将 Obsidian markdown 知识库文件夹渲染为静态 HTML 站点。
 
-## Usage
+## 使用方法
 
 ```yaml
 - uses: fangbinwei/inkpress-render-action@v1
@@ -14,7 +14,7 @@ Render Obsidian markdown vault folders into a static HTML site.
     output-dir: '.site-output'
 ```
 
-### Full workflow with OSS upload
+### 完整工作流（含 OSS 上传）
 
 ```yaml
 name: Publish Obsidian to OSS
@@ -41,20 +41,20 @@ jobs:
           folder: '.site-output'
 ```
 
-### Inputs
+### 输入参数
 
-| Input | Required | Default | Description |
-|-------|----------|---------|-------------|
-| `vault-path` | Yes | `.` | Path to Obsidian vault root |
-| `publish-dirs` | Yes | | Comma-separated directories to publish |
-| `output-dir` | Yes | `.site-output` | Output directory for rendered HTML |
-| `upload-mode` | No | `html` | `html` or `html+md` |
-| `dead-link-policy` | No | `silent` | `silent` or `marked` |
+| 参数 | 必填 | 默认值 | 说明 |
+|------|------|--------|------|
+| `vault-path` | 是 | `.` | Obsidian 知识库根路径 |
+| `publish-dirs` | 是 | | 需要发布的目录，逗号分隔 |
+| `output-dir` | 是 | `.site-output` | 渲染后 HTML 的输出目录 |
+| `upload-mode` | 否 | `html` | `html` 或 `html+md` |
+| `dead-link-policy` | 否 | `silent` | `silent` 或 `marked` |
 
-### Outputs
+### 输出参数
 
-| Output | Description |
-|--------|-------------|
-| `rendered-count` | Number of files rendered |
-| `dead-link-count` | Number of dead links found |
-| `report-path` | Path to the JSON publish report |
+| 输出 | 说明 |
+|------|------|
+| `rendered-count` | 渲染的文件数量 |
+| `dead-link-count` | 检测到的死链数量 |
+| `report-path` | JSON 发布报告的路径 |
