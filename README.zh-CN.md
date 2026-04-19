@@ -7,7 +7,7 @@
 ## 使用方法
 
 ```yaml
-- uses: fangbinwei/inkpress-render-action@v1
+- uses: fangbinwei/inkpress-render-action@v0
   with:
     vault-path: '.'
     publish-dirs: 'notes,guides'
@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: fangbinwei/inkpress-render-action@v1
+      - uses: fangbinwei/inkpress-render-action@v0
         with:
           vault-path: '.'
           publish-dirs: 'notes,guides'
