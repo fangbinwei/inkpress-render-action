@@ -12,7 +12,10 @@
     "format": "biome format --write",
     "lint": "biome lint",
     "check": "biome check --write",
-    "check:ci": "biome ci"
+    "check:ci": "biome ci",
+    "release:patch": "pnpm version patch && git push --follow-tags",
+    "release:minor": "pnpm version minor && git push --follow-tags",
+    "release:major": "pnpm version major && git push --follow-tags"
   },
   "dependencies": {
     "@actions/core": "^1.10.0",
