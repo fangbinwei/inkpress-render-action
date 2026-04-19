@@ -17,6 +17,7 @@ jobs:
           node-version: 20
           cache: pnpm
       - run: pnpm install --frozen-lockfile
+      - run: pnpm check:ci
       - run: pnpm exec tsc --noEmit
       - run: pnpm run build
       - name: Verify dist/ is up to date

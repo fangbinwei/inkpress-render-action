@@ -8,15 +8,20 @@
   },
   "author": "fangbinwei",
   "scripts": {
-    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --outfile=dist/index.js"
+    "build": "esbuild src/index.ts --bundle --platform=node --target=node20 --outfile=dist/index.js",
+    "format": "biome format --write",
+    "lint": "biome lint",
+    "check": "biome check --write",
+    "check:ci": "biome ci"
   },
   "dependencies": {
-    "inkpress-renderer": "^0.1.0",
-    "@actions/core": "^1.10.0"
+    "@actions/core": "^1.10.0",
+    "inkpress-renderer": "^0.1.0"
   },
   "devDependencies": {
-    "typescript": "^5.4.0",
+    "@biomejs/biome": "2.4.12",
     "@types/node": "^20.0.0",
-    "esbuild": "^0.20.0"
+    "esbuild": "^0.20.0",
+    "typescript": "^5.4.0"
   }
 }

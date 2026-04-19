@@ -1,13 +1,14 @@
+import { mkdirSync, writeFileSync } from 'node:fs'
+import { dirname, join, resolve } from 'node:path'
 import * as core from '@actions/core'
-import { renderSite, DefaultTheme } from 'inkpress-renderer'
+import { DefaultTheme, renderSite } from 'inkpress-renderer'
 import { createNodeAdapter } from './node-adapter'
-import { writeFileSync, mkdirSync } from 'fs'
-import { join, dirname, resolve } from 'path'
 
 async function run(): Promise<void> {
   try {
     const vaultPath = core.getInput('vault-path', { required: true })
-    const publishDirs = core.getInput('publish-dirs', { required: true })
+    const publishDirs = core
+      .getInput('publish-dirs', { required: true })
       .split(',')
       .map(s => s.trim())
       .filter(Boolean)
@@ -21,15 +22,21 @@ async function run(): Promise<void> {
       return
     }
     if (uploadMode !== 'html' && uploadMode !== 'html+md') {
-      core.setFailed(`Invalid upload-mode "${uploadMode}". Must be "html" or "html+md"`)
+      core.setFailed(
+        `Invalid upload-mode "${uploadMode}". Must be "html" or "html+md"`,
+      )
       return
     }
     if (deadLinkPolicy !== 'silent' && deadLinkPolicy !== 'marked') {
-      core.setFailed(`Invalid dead-link-policy "${deadLinkPolicy}". Must be "silent" or "marked"`)
+      core.setFailed(
+        `Invalid dead-link-policy "${deadLinkPolicy}". Must be "silent" or "marked"`,
+      )
       return
     }
 
-    core.info(`Rendering vault at ${vaultPath}, dirs: ${publishDirs.join(', ')}`)
+    core.info(
+      `Rendering vault at ${vaultPath}, dirs: ${publishDirs.join(', ')}`,
+    )
 
     const result = await renderSite({
       vaultPath,
@@ -46,8 +53,13 @@ async function run(): Promise<void> {
     const resolvedOutputDir = resolve(outputDir)
     for (const file of result.files) {
       const dest = resolve(join(outputDir, file.relativePath))
-      if (!dest.startsWith(resolvedOutputDir + '/') && dest !== resolvedOutputDir) {
-        core.warning(`Skipping file with path escaping output directory: ${file.relativePath}`)
+      if (
+        !dest.startsWith(`${resolvedOutputDir}/`) &&
+        dest !== resolvedOutputDir
+      ) {
+        core.warning(
+          `Skipping file with path escaping output directory: ${file.relativePath}`,
+        )
         continue
       }
       mkdirSync(dirname(dest), { recursive: true })
@@ -61,7 +73,9 @@ async function run(): Promise<void> {
     core.setOutput('dead-link-count', String(result.report.deadLinks.length))
     core.setOutput('report-path', reportPath)
 
-    core.info(`Rendered ${result.report.rendered} pages, ${result.report.deadLinks.length} dead links`)
+    core.info(
+      `Rendered ${result.report.rendered} pages, ${result.report.deadLinks.length} dead links`,
+    )
 
     if (result.report.deadLinks.length > 0) {
       core.warning(`Found ${result.report.deadLinks.length} dead links:`)

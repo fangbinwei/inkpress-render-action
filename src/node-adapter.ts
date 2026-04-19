@@ -1,5 +1,5 @@
-import { readFile, readdir, stat, access } from 'fs/promises'
-import { join } from 'path'
+import { access, readdir, readFile, stat } from 'node:fs/promises'
+import { join } from 'node:path'
 import type { FileSystemAdapter } from 'inkpress-renderer'
 
 export function createNodeAdapter(basePath: string): FileSystemAdapter {
@@ -12,12 +12,18 @@ export function createNodeAdapter(basePath: string): FileSystemAdapter {
     },
     async listFiles(dir: string): Promise<string[]> {
       const fullDir = join(basePath, dir)
-      const entries = await readdir(fullDir, { withFileTypes: true, recursive: true })
+      const entries = await readdir(fullDir, {
+        withFileTypes: true,
+        recursive: true,
+      })
       return entries
         .filter(e => e.isFile())
         .map(e => {
           const entryDir = e.parentPath || e.path
-          return join(dir, entryDir.slice(fullDir.length), e.name).replace(/\\/g, '/')
+          return join(dir, entryDir.slice(fullDir.length), e.name).replace(
+            /\\/g,
+            '/',
+          )
         })
     },
     async exists(path: string): Promise<boolean> {
